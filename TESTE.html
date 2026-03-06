@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>PHANTOM CORE ENGINE</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:system-ui,-apple-system,Segoe UI,Roboto;
+}
+
+body{
+height:100vh;
+background:linear-gradient(135deg,#0f172a,#020617);
+display:flex;
+align-items:center;
+justify-content:center;
+color:white;
+}
+
+.container{
+width:420px;
+background:#0b1220;
+border:1px solid #1e293b;
+border-radius:14px;
+padding:35px;
+box-shadow:0 20px 60px rgba(0,0,0,0.6);
+position:relative;
+overflow:hidden;
+}
+
+.header{
+text-align:center;
+margin-bottom:25px;
+}
+
+.engine{
+font-size:12px;
+color:#64748b;
+letter-spacing:2px;
+}
+
+.title{
+font-size:22px;
+font-weight:700;
+margin-top:6px;
+text-shadow:
+0 0 6px rgba(255,255,255,0.25),
+0 0 12px rgba(255,255,255,0.08);
+}
+
+label{
+font-size:13px;
+color:#94a3b8;
+}
+
+input{
+width:100%;
+margin-top:6px;
+margin-bottom:18px;
+padding:12px;
+border-radius:8px;
+border:1px solid #334155;
+background:#020617;
+color:white;
+}
+
+button{
+width:100%;
+padding:12px;
+border:none;
+border-radius:8px;
+background:#2563eb;
+color:white;
+font-weight:600;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.progress{
+margin-top:16px;
+height:6px;
+background:#1e293b;
+border-radius:6px;
+overflow:hidden;
+display:none;
+}
+
+.bar{
+height:100%;
+width:0%;
+background:#22c55e;
+transition:width .4s;
+}
+
+.logs{
+margin-top:16px;
+font-size:12px;
+color:#94a3b8;
+line-height:1.6;
+display:none;
+font-family:monospace;
+}
+
+.cursor{
+display:inline-block;
+width:6px;
+height:14px;
+background:#22c55e;
+margin-left:4px;
+animation:blink 1s infinite;
+}
+
+@keyframes blink{
+0%{opacity:1}
+50%{opacity:0}
+100%{opacity:1}
+}
+
+.success{
+margin-top:18px;
+padding:14px;
+background:#052e1a;
+border:1px solid #166534;
+border-radius:8px;
+font-size:14px;
+display:none;
+}
+
+.error{
+margin-top:18px;
+padding:14px;
+background:#3b0a0a;
+border:1px solid #7f1d1d;
+border-radius:8px;
+font-size:14px;
+display:none;
+}
+
+.signature{
+margin-top:22px;
+padding-top:14px;
+border-top:1px solid #1e293b;
+text-align:center;
+font-size:12px;
+color:#64748b;
+}
+
+.signature span{
+color:#94a3b8;
+}
+
+/* scan line */
+
+.scanline{
+position:absolute;
+left:0;
+width:100%;
+height:2px;
+background:linear-gradient(90deg,transparent,#22c55e,transparent);
+animation:scan 2.2s linear 1;
+}
+
+@keyframes scan{
+0%{top:-10px}
+100%{top:110%}
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="scanline" id="scan"></div>
+
+<div class="header">
+
+<div class="engine">PHANTOM CORE ENGINE</div>
+<div class="title">Validação de Usuário</div>
+
+</div>
+
+<label>Usuário</label>
+<input id="user" placeholder="Digite seu usuário">
+
+<button onclick="startValidation()">Validar</button>
+
+<div class="progress">
+<div class="bar" id="bar"></div>
+</div>
+
+<div class="logs" id="logs"></div>
+
+<div class="success" id="success"></div>
+<div class="error" id="error"></div>
+
+<div class="signature">
+Designed by : <span>@eov1niii</span>
+</div>
+
+</div>
+
+<script>
+
+/* remover scan após 1 execução */
+
+setTimeout(()=>{
+const scan=document.getElementById("scan")
+if(scan) scan.remove()
+},2200)
+
+
+/* palavras proibidas */
+
+const blockedWords=[
+"coco","merda","bosta","vsf","lixo","fdp","porra","caralho"
+]
+
+
+/* protocolo */
+
+function protocolo(){
+return "VAL-"+Math.floor(Math.random()*900000+100000)
+}
+
+
+/* efetividade 90-99 mudando a cada 2h */
+
+function gerarEfetividade(){
+
+const agora=new Date()
+
+const bloco=Math.floor(agora.getTime()/(1000*60*60*2))
+
+const valor=90+(bloco%10)
+
+return valor
+
+}
+
+
+/* logs */
+
+const steps=[
+
+"Inicializando Phantom Engine...",
+"Conectando ao núcleo do sistema...",
+"Sincronizando cluster Phantom...",
+"Consultando banco de dados seguro...",
+"Verificando integridade do usuário...",
+"Validando credenciais...",
+"Gerando protocolo..."
+
+]
+
+
+function startValidation(){
+
+let user=document.getElementById("user").value.toLowerCase()
+
+/* verifica palavras proibidas */
+
+for(let word of blockedWords){
+
+if(user.includes(word)){
+
+document.getElementById("error").style.display="block"
+
+document.getElementById("error").innerHTML=`
+
+Não foi possível validar usuário.<br><br>
+Entrada inválida detectada pelo sistema.
+
+`
+
+return
+}
+
+}
+
+if(user.length<3){
+alert("Usuário inválido")
+return
+}
+
+document.querySelector(".progress").style.display="block"
+document.getElementById("logs").style.display="block"
+
+let logBox=document.getElementById("logs")
+let bar=document.getElementById("bar")
+
+let step=0
+
+function next(){
+
+if(step<steps.length){
+
+logBox.innerHTML+=steps[step]+"<br>"
+bar.style.width=((step+1)/steps.length*100)+"%"
+
+step++
+
+setTimeout(next,800)
+
+}else{
+
+finish()
+
+}
+
+}
+
+next()
+
+}
+
+
+/* resultado final */
+
+function finish(){
+
+let proto=protocolo()
+let now=new Date().toLocaleString()
+
+let efetividade=gerarEfetividade()
+
+let success=document.getElementById("success")
+
+success.style.display="block"
+
+success.innerHTML=`
+
+Usuário validado com sucesso.<br><br>
+
+Protocolo: <b>${proto}</b><br>
+Status: Ativo<br>
+Timestamp: ${now}<br><br>
+
+Efetividade da região: <b>${efetividade}%</b>
+
+`
+
+let logs=document.getElementById("logs")
+logs.innerHTML+='<span class="cursor"></span>'
+
+}
+
+</script>
+
+</body>
+</html>
