@@ -1,81 +1,19 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Aguarde...</title>
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: #111827;
-            color: #ffffff;
-            font-family: Arial, Helvetica, sans-serif;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        .loader {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(255,255,255,.15);
-            border-top: 5px solid #25D366;
-            border-radius: 50%;
-            animation: spin .8s linear infinite;
-            margin: 0 auto 24px;
-        }
-
-        h1 {
-            font-size: 32px;
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        p {
-            color: #b5b5b5;
-            font-size: 16px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-    </style>
+    <title>Redirecionando...</title>
 
     <script>
-        const DELAY = 1000; // 2 segundos
-
-        setTimeout(() => {
-            window.location.replace("www.rusmk.com/?id=570517811");
-        }, DELAY);
+        setTimeout(function() {
+            window.location.href = "https://www.rusmk.com/?id=570517811";
+        }, 1000);
     </script>
-
 </head>
-
 <body>
-
-    <div class="container">
-
-        <div class="loader"></div>
-
-        <h1>Acessando...</h1>
-
-        <p>Você sera redirecionado para a pagina.</p>
-
-    </div>
-
+    <p>Redirecionando...</p>
 </body>
 </html>
+```
